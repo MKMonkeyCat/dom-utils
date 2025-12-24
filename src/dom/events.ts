@@ -27,7 +27,7 @@ export const onClickOutside = (
 ): (() => void) => {
   const { event = 'mousedown', capture = true, exclude = [] } = options;
 
-  const handleClick = (e: MouseEvent) => {
+  const handleClick = markAsEventFunc((e: MouseEvent) => {
     const target = e.target as Node;
 
     // Check if click is on the element or its descendants
@@ -37,7 +37,7 @@ export const onClickOutside = (
     if (exclude.some((el) => el?.contains(target))) return;
 
     callback(e);
-  };
+  });
 
   document.addEventListener(event, handleClick, capture);
 
@@ -79,13 +79,13 @@ export const onKeyPress = (
 
   const keys = Array.isArray(key) ? key : [key];
 
-  const handleKeyPress = (e: KeyboardEvent) => {
+  const handleKeyPress = markAsEventFunc((e: KeyboardEvent) => {
     if (keys.includes(e.key)) {
       if (preventDefault) e.preventDefault();
       if (stopPropagation) e.stopPropagation();
       callback(e);
     }
-  };
+  });
 
   target.addEventListener(event, handleKeyPress as EventListener);
 
@@ -204,30 +204,6 @@ export const onLongPress = (
     removeListeners();
     if (timeoutId) clearTimeout(timeoutId);
   };
-};
-
-/**
- * Attaches a one-time event listener.
- * @param element - The element to attach the listener to.
- * @param event - The event type.
- * @param callback - The callback to invoke.
- * @param options - Event listener options.
- * @returns A function to remove the listener.
- */
-export const onceEvent = <K extends keyof HTMLElementEventMap>(
-  element: HTMLElement,
-  event: K,
-  callback: (event: HTMLElementEventMap[K]) => void,
-  options?: AddEventListenerOptions,
-): (() => void) => {
-  const handler = (e: HTMLElementEventMap[K]) => {
-    callback(e);
-    element.removeEventListener(event, handler, options);
-  };
-
-  element.addEventListener(event, handler, options);
-
-  return () => element.removeEventListener(event, handler, options);
 };
 
 /**

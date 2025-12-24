@@ -1,0 +1,50 @@
+{
+  "name": "@mkmonkeycat/dom-utils",
+  "version": "0.1.0",
+  "description": "A collection of utility functions for DOM manipulation in TypeScript.",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/MKMonkeyCat/dom-utils.git",
+  "author": "MKMonkeyCat <a102009102009@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "typescript",
+    "dom",
+    "utilities",
+    "utils",
+    "library",
+    "web",
+    "frontend"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "vite",
+    "demo:build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint:fix": "eslint ./src --ext .ts,.tsx --quiet --fix",
+    "lint:format": "prettier --log-level warn --write \"./**/*.{ts,tsx,css,md,json}\"",
+    "lint": "yarn lint:format && yarn lint:fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "@vitest/coverage-v8": "^2.1.8",
+    "eslint": "^9.39.2",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.7.4",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.0",
+    "vite": "^7.3.0",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {}
+}

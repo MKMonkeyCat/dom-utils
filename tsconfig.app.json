@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@lib": ["./src"],
+      "@lib/*": ["./src/*"]
+    }
+  },
+  "references": [{ "path": "./tsconfig.lib.json" }],
+  "include": ["demo/**/*"]
+}

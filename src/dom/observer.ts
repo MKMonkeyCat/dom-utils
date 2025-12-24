@@ -59,11 +59,11 @@ export const waitForElement = <T extends HTMLElement = HTMLElement>(
       reject(new Error(`Timeout: Element "${selector}" not found within ${timeout}ms`));
     }, timeout);
 
-    function cleanup() {
+    const cleanup = () => {
       observer.disconnect();
       clearTimeout(timeoutId);
       clearInterval(intervalId);
-    }
+    };
   });
 };
 
@@ -144,10 +144,10 @@ export const waitForElementRemoval = (
       }, timeout);
     }
 
-    function cleanup() {
+    const cleanup = () => {
       observer.disconnect();
       if (timeoutId) clearTimeout(timeoutId);
-    }
+    };
   });
 };
 
@@ -185,10 +185,7 @@ export const watchElementChanges = (
     onMutation,
   } = options;
 
-  const observer = new MutationObserver((mutations) => {
-    onMutation?.(mutations);
-  });
-
+  const observer = new MutationObserver((mutations) => onMutation?.(mutations));
   observer.observe(element, {
     attributes,
     childList,

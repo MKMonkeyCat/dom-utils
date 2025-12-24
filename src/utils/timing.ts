@@ -101,3 +101,79 @@ export const throttle = <T extends (...args: unknown[]) => unknown>(
 
   return throttled;
 };
+
+/**
+ * Creates a promise that resolves after a specified delay.
+ * @param ms - The delay in milliseconds.
+ * @returns A promise that resolves after the delay.
+ */
+export const delay = (ms: number): Promise<void> => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+/**
+ * Pauses execution for a specified duration in async contexts.
+ * @param ms - The duration to sleep in milliseconds.
+ * @returns A promise that resolves after the sleep duration.
+ */
+export const sleep = (ms: number): Promise<void> => delay(ms);
+
+/**
+ * Creates a promise that rejects if the given promise doesn't resolve within the specified timeout.
+ * @param promise - The promise to apply a timeout to.
+ * @param ms - The timeout duration in milliseconds.
+ * @param message - Optional error message for the timeout error.
+ * @returns A promise that resolves with the original promise's value or rejects on timeout.
+ */
+export const timeout = <T>(
+  promise: Promise<T>,
+  ms: number,
+  message = `Operation timed out after ${ms}ms`,
+): Promise<T> => {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => setTimeout(() => reject(new Error(message)), ms)),
+  ]);
+};
+
+/**
+ * A no-operation function that does nothing when called.
+ */
+export const noop = (): void => {};
+
+/**
+ * Retries a function until it succeeds or reaches the maximum number of attempts.
+ * @param fn - The async function to retry.
+ * @param options - Configuration options for retry behavior.
+ * @returns A promise that resolves with the function result or rejects if all attempts fail.
+ */
+export const retry = async <T>(
+  fn: () => Promise<T>,
+  options: {
+    /** Maximum number of attempts. Default: 3 */
+    maxAttempts?: number;
+    /** Delay in milliseconds between attempts. Default: 1000 */
+    delay?: number;
+    /** Whether to use exponential backoff. Default: false */
+    exponential?: boolean;
+  } = {},
+): Promise<T> => {
+  const { maxAttempts = 3, delay = 1000, exponential = false } = options;
+
+  let lastError: Error | undefined;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+
+      if (attempt < maxAttempts) {
+        const waitTime = exponential ? delay * Math.pow(2, attempt - 1) : delay;
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+      }
+    }
+  }
+
+  throw lastError || new Error('Retry failed');
+};

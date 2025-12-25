@@ -233,3 +233,20 @@ export const getOuterSize = (
 export const getRect = (element: HTMLElement): DOMRect => {
   return element.getBoundingClientRect();
 };
+
+/**
+ * Creates an SVG element from an SVG string.
+ * @param svgString - The SVG markup as a string.
+ * @returns The parsed SVGElement.
+ * @throws Error if the SVG string is invalid or contains multiple root elements.
+ */
+export const createSVGFromString = (svgString: string): SVGElement => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(svgString, 'image/svg+xml');
+
+  if (doc.documentElement.nodeName === 'parsererror') {
+    throw new Error('Invalid SVG string: Failed to parse SVG');
+  }
+
+  return doc.documentElement as unknown as SVGElement;
+};

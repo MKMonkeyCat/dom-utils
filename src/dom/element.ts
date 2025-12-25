@@ -186,3 +186,50 @@ export const scrollIntoView = (
 ): void => {
   element.scrollIntoView?.(options);
 };
+
+/**
+ * Gets the inner size of an element (client width/height: includes padding, excludes border and scrollbar).
+ * @param element - The element to measure.
+ * @returns An object with width and height properties.
+ */
+export const getInnerSize = (element: HTMLElement): { width: number; height: number } => {
+  return {
+    width: element.clientWidth,
+    height: element.clientHeight,
+  };
+};
+
+/**
+ * Gets the outer size of an element (offset size). Optionally includes margins.
+ * @param element - The element to measure.
+ * @param includeMargin - Whether to include margins in the calculation.
+ * @returns An object with width and height properties.
+ */
+export const getOuterSize = (
+  element: HTMLElement,
+  includeMargin = false,
+): { width: number; height: number } => {
+  let width = element.offsetWidth;
+  let height = element.offsetHeight;
+
+  if (includeMargin) {
+    const styles = window.getComputedStyle(element);
+    const ml = parseFloat(styles.marginLeft || '0');
+    const mr = parseFloat(styles.marginRight || '0');
+    const mt = parseFloat(styles.marginTop || '0');
+    const mb = parseFloat(styles.marginBottom || '0');
+    width += ml + mr;
+    height += mt + mb;
+  }
+
+  return { width, height };
+};
+
+/**
+ * Gets the bounding client rect of an element.
+ * @param element - The element to measure.
+ * @returns The DOMRect representing the element's bounding box.
+ */
+export const getRect = (element: HTMLElement): DOMRect => {
+  return element.getBoundingClientRect();
+};

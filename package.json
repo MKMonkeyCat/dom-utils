@@ -2,11 +2,25 @@
   "name": "@mkmonkeycat/dom-utils",
   "version": "0.1.0",
   "description": "A TypeScript utility library for DOM manipulation and common web development tasks.",
+  "homepage": "https://github.com/MKMonkeyCat/dom-utils#readme",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/MKMonkeyCat/dom-utils.git",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MKMonkeyCat/dom-utils.git"
+  },
   "bugs": {
     "url": "https://github.com/MKMonkeyCat/dom-utils/issues"
   },

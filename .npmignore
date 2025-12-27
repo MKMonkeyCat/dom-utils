@@ -1,0 +1,29 @@
+# Source
+src/
+tests/
+coverage/
+
+# Config files
+tsconfig.json
+vite.config.ts
+vitest.config.ts
+eslint.config.mjs
+.eslintignore
+.prettierignore
+.prettierrc.yml
+
+# Development
+node_modules/
+.git/
+.github/workflows
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Files
+index.html
+yarn.lock
+package-lock.json
+pnpm-lock.yaml

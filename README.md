@@ -16,3 +16,11 @@ pnpm add @mkmonkeycat/dom-utils
 ```
 
 ## Usage
+
+```ts
+import { VERSION } from '@mkmonkeycat/dom-utils';
+import { injectStyle } from '@mkmonkeycat/dom-utils/dom';
+import { camelToKebab } from '@mkmonkeycat/dom-utils/utils';
+
+injectStyle('.app { display: grid; }');
+```
